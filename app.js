@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const { requireAuth, checkUser } = require("./middleware/authMiddleWare");
 const cookieParser = require("cookie-parser");
+require('dotenv').config();
 const app = express();
 
 // middleware
@@ -14,11 +15,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // database connection
-const dbURI =
-  "mongodb+srv://sasidhar:sasidhar6@mycluster.8hbam2m.mongodb.net/node-auth?retryWrites=true&w=majority&appName=MyCluster";
 const port = 3000;
 mongoose
-  .connect(dbURI)
+  .connect(process.env.dbURI)
   .then(() => {
     console.log("Connected to db");
     app.listen(port, () => {
